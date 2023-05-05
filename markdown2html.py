@@ -28,7 +28,25 @@ def convert_markdown_to_html(input_file, output_file):
                 h_text = match.group(2)
                 html_lines.append(f"<h{h_level}>{h_text}</h{h_level}>")
             else:
-                html_lines.append(line.rstrip())
+                # Check for Markdown unordered list items
+                match = re.match(r"^\s*-\s+(.*)$", line)
+                in_list = False
+                if match:
+                    if not in_list:
+                        html_lines.append("<ul>")
+                        in_list = True
+                    html_lines.append(f"<li>{match.group(1).rstrip()}</li>")
+               else:
+                    if in_list:
+                        html_lines.append("</ul>")
+                        in_list = False
+                    html_lines.append(line.rstrip())
+        # Close any open unordered list
+        if in_list:
+            html_lines.append("</ul>")
+
+        if in_list:
+            html_lines.append("</ul>")
 
     # Write the HTML output to a file
     with open(output_file, "w", encoding="utf-8") as f:
@@ -38,7 +56,7 @@ def convert_markdown_to_html(input_file, output_file):
 if __name__ == "__main__":
     # Check for correct number args
     if len(sys.argv) != 3:
-        print("Usage: ./markdown2html.py README.md README.html",file=sys.stderr)
+        print("Usage: ./markdown2html.py README.md README.html", file=sys.stderr)
         sys.exit(1)
 
     # Get the input and output file names from the command-line arguments
