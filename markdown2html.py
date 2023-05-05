@@ -1,61 +1,52 @@
 #!/usr/bin/python3
 """
-Markdown to HTML converter
-
-Usage: ./markdown2html.py input_file output_file
+A script that converts Markdown to HTML.
 """
 
 import sys
+import os
 import re
-import markdown
-
-# Define regex patterns for headings
-heading_pattern = re.compile(r'^(#+)\s(.*)$')
 
 
-def main():
+def convert_markdown_to_html(input_file, output_file):
     """
-    Main function that converts a markdown file to HTML
+    Converts a Markdown file to HTML and writes the output to a file.
     """
-    # Check the number of arguments
-    if len(sys.argv) < 3:
-        print("Usage: ./markdown2html.py input_file output_file")
+    # Check that the Markdown file exists and is a file
+    if not (os.path.exists(input_file) and os.path.isfile(input_file)):
+        print(f"Missing {input_file}", file=sys.stderr)
         sys.exit(1)
 
-    # Get the input and output file names
-    input_file = sys.argv[1]
-    output_file = sys.argv[2]
-
-    # Check if the input file exists
-    try:
-        with open(input_file, 'r') as f:
-            pass
-    except FileNotFoundError:
-        print(f"Missing {input_file}")
-        sys.exit(1)
-
-    # Read the input file
-    with open(input_file, 'r') as f:
-        # Parse the headings syntax
-        lines = []
-        for line in f.readlines():
-            match = heading_pattern.match(line.strip())
+    # Read the Markdown file and convert it to HTML
+    with open(input_file, encoding="utf-8") as f:
+        html_lines = []
+        for line in f:
+            # Check for Markdown headings
+            match = re.match(r"^(#+) (.*)$", line)
             if match:
-                level = len(match.group(1))
-                title = match.group(2)
-                lines.append(f"<h{level}>{title}</h{level}>")
+                h_level = len(match.group(1))
+                h_text = match.group(2)
+                html_lines.append(f"<h{h_level}>{h_text}</h{h_level}>")
             else:
-                lines.append(line)
+                html_lines.append(line.rstrip())
 
-        # Convert the markdown file to HTML
-        html = markdown.markdown('\n'.join(lines), output_format='html5')
-
-    # Write the HTML to the output file
-    with open(output_file, 'w') as f:
-        f.write(html)
-
-    sys.exit(0)
+    # Write the HTML output to a file
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write("\n".join(html_lines))
 
 
 if __name__ == "__main__":
-    main()
+    # Check for correct number args
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py <input_file> <output_file>", file=sys.stderr)
+        sys.exit(1)
+
+    # Get the input and output file names from the command-line arguments
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # Convert the Markdown file to HTML and write the output to a file
+    convert_markdown_to_html(input_file, output_file)
+
+    # Exit with a successful status code
+    sys.exit(0)
