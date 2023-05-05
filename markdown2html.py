@@ -12,6 +12,7 @@ import markdown
 # Define regex patterns for headings
 heading_pattern = re.compile(r'^(#+)\s(.*)$')
 
+
 def main():
     """
     Main function that converts a markdown file to HTML
@@ -54,6 +55,7 @@ def main():
         f.write(html)
 
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
