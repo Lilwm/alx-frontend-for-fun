@@ -28,26 +28,7 @@ def convert_markdown_to_html(input_file, output_file):
                 h_text = match.group(2)
                 html_lines.append(f"<h{h_level}>{h_text}</h{h_level}>")
             else:
-                # Check for Markdown unordered list items
-                match = re.match(r"^\s*-\s+(.*)$", line)
-                in_list = False
-                if match:
-                    if not in_list:
-                        html_lines.append("<ul>")
-                        in_list = True
-                    html_lines.append(f"<li>{match.group(1).rstrip()}</li>")
-               else:
-                    if in_list:
-                        html_lines.append("</ul>")
-                        in_list = False
-                    html_lines.append(line.rstrip())
-        # Close any open unordered list
-        if in_list:
-            html_lines.append("</ul>")
-
-        if in_list:
-            html_lines.append("</ul>")
-
+                html_lines.append(line.rstrip())
     # Write the HTML output to a file
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("\n".join(html_lines))
