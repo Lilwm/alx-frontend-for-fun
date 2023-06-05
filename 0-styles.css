@@ -1,0 +1,37 @@
+body{
+    font-weight: bold;
+    font-size: xx-large;
+    height: 100vh;
+}
+ul{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    list-style: none;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr); /*creates three equal-width columns*/
+}
+li{
+    display: grid;
+    place-items: center;
+    border: 2.5px solid #d3d3d3;
+    border-radius: 10px;
+    width: 350px;
+    height: 550px;
+    place-items: center;
+    grid-template-rows: 1fr 2.5fr;
+    background-color: #f9f8f8;
+}
+span{
+    height: 100%;
+    width: 220px;
+}
+span.i-html {
+    background: url('0-sprite.png') no-repeat -40px -30px;
+}
+span.i-css {
+    background: url('0-sprite.png') no-repeat -320px -40px;
+}
+span.i-js {
+    background: url('0-sprite.png') no-repeat -610px -40px;
+}

@@ -1,0 +1,12 @@
+a{
+    text-decoration: none;
+    color: #8a153a;
+    
+}
+
+a:hover {
+    text-decoration: underline;
+    transform: translateY(2.2ex);
+    transform-origin: left;
+    transition: .5s ease-out;
+  }
