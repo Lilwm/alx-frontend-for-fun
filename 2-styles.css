@@ -1,0 +1,39 @@
+:root{
+    --switch-size: 40px;
+}
+.toggle{
+    display: flex;
+    transform: translateX(100px);
+}
+.toggle-cb{
+
+}
+.toggle-label{
+    position: relative;
+}
+.toggle-inner{
+    width:calc(var(--switch-size) * 2) ;
+    height: 30px;
+    border: 2px solid rgb(171, 170, 170);
+    border-radius: 30px;
+    background-color: rgb(248, 248, 248);
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: rgb(171, 170, 170);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.toggle-switch{
+    width: var(--switch-size);
+    height: var(--switch-size);
+    border: 2px solid rgb(172, 172, 172);
+    border-radius: 50%;
+    position: absolute;
+    transform: translateY(calc(var(--switch-size) * -1));
+
+}
+#toggle-0{
+    background-color: rgb(181, 8, 8);
+    border-radius: ;
+}
